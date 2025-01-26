@@ -15,11 +15,10 @@ def ingest_docs():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=50)
     documents = text_splitter.split_documents(raw_documents)
     
-    # Cria o banco de dados vetorial com Chroma
     db = Chroma.from_documents(
         documents=documents,
         embedding=OpenAIEmbeddings(model="text-embedding-3-small"),
-        persist_directory="./chroma_db"  # Diretório para persistir os dados do Chroma
+        persist_directory="./chroma_db"
     )
     
     db.persist()
