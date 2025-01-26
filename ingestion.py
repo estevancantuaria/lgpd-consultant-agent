@@ -9,7 +9,7 @@ from langchain_community.vectorstores import Chroma
 
 def ingest_docs():
 
-    loader = PyPDFLoader("guia_lgpd.pdf", extract_images=False)
+    loader = PyPDFLoader("lgpd.pdf", extract_images=False)
     raw_documents = loader.load_and_split()
      
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=50)
@@ -17,11 +17,10 @@ def ingest_docs():
     
     db = Chroma.from_documents(
         documents=documents,
+        collection_name="lgpd",
         embedding=OpenAIEmbeddings(model="text-embedding-3-small"),
         persist_directory="./chroma_db"
     )
-    
-    db.persist()
     
     print("Finish")
 
